@@ -1,16 +1,22 @@
 import {
+  MatFormFieldModule,
+  MatIconModule,
   MatButtonModule,
   MatCheckboxModule,
   MatToolbarModule,
+  MatSelectModule,
   MatDatepickerModule,
 } from '@angular/material';
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
 import { NgModule } from '@angular/core';
 
 const importExports = [
+  MatFormFieldModule,
+  MatIconModule,
   MatButtonModule,
   MatCheckboxModule,
   MatToolbarModule,
+  MatSelectModule,
   MatDatepickerModule,
   MatMomentDateModule,
 ];
@@ -19,4 +25,4 @@ const importExports = [
   imports: [...importExports],
   exports: [...importExports],
 })
-export class LensTrackMaterialModule { }
+export class SharedMaterialModule { }

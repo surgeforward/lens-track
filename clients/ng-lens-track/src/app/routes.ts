@@ -1,8 +1,8 @@
 import { RouterModule, Routes } from '@angular/router';
-
-import { LensCalendarComponent } from './lens-calendar/lens-calendar.component';
+import { LandingPageComponent } from './landing-page/landing-page.component';
 
 export const routes: Routes = [
-  { path: 'lens-calendar', component: LensCalendarComponent },
-  { path: '', redirectTo: '/lens-calendar', pathMatch: 'full' }
+  { path: 'home', component: LandingPageComponent },
+  { path: 'landing-page', redirectTo: '/home', pathMatch: 'full' },
+  { path: '', redirectTo: '/home', pathMatch: 'full' }
 ];
