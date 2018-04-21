@@ -7,7 +7,7 @@ import { routes } from './routes';
 import { AppComponent } from './app.component';
 import { SharedMaterialModule } from './shared/material.module';
 import { StoreModule } from '@ngrx/store';
-import { reducers, metaReducers } from './reducers';
+import * as fromRoot from './reducers';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../environments/environment';
 import { EffectsModule } from '@ngrx/effects';
@@ -34,7 +34,10 @@ import { SharedFormsModule } from './shared/forms.module';
     HttpClientModule,
     SharedFormsModule,
     SharedMaterialModule,
-    StoreModule.forRoot(reducers, { metaReducers }),
+    StoreModule.forRoot(fromRoot.reducers, {
+      initialState: fromRoot.initialState,
+      metaReducers: fromRoot.metaReducers,
+    }),
     !environment.production ? StoreDevtoolsModule.instrument() : [],
     EffectsModule.forRoot([AppEffects]),
     UserProfileManagementModule,
