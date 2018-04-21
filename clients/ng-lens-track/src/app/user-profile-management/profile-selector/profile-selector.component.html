@@ -1,0 +1,13 @@
+<mat-form-field>
+  <mat-select [(ngModel)]="currentUser" name="user-profile">
+    <mat-option *ngFor="let userProfile of userProfiles" [value]="userProfile">
+      {{userProfile.name}}
+    </mat-option>
+  </mat-select>
+</mat-form-field>
+<button mat-icon-button>
+  <mat-icon>mode_edit</mat-icon>
+</button>
+<button mat-icon-button>
+  <mat-icon>add</mat-icon>
+</button>

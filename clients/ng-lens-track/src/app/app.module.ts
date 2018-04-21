@@ -1,12 +1,11 @@
-import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { FlexLayoutModule } from '@angular/flex-layout';
 import { RouterModule } from '@angular/router';
+import { HttpModule } from '@angular/http';
+import { HttpClientModule } from '@angular/common/http';
 
 import { routes } from './routes';
 import { AppComponent } from './app.component';
-import { LensTrackMaterialModule } from './shared/material.module';
+import { SharedMaterialModule } from './shared/material.module';
 import { StoreModule } from '@ngrx/store';
 import { reducers, metaReducers } from './reducers';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
@@ -16,6 +15,8 @@ import { AppEffects } from './app.effects';
 import { MainNavbarComponent } from './main-navbar/main-navbar.component';
 import { LandingPageComponent } from './landing-page/landing-page.component';
 import { LensCalendarComponent } from './lens-calendar/lens-calendar.component';
+import { UserProfileManagementModule } from './user-profile-management/user-profile-management.module';
+import { SharedFormsModule } from './shared/forms.module';
 
 @NgModule({
   declarations: [
@@ -29,13 +30,14 @@ import { LensCalendarComponent } from './lens-calendar/lens-calendar.component';
       routes,
       { enableTracing: !environment.production }
     ),
-    BrowserModule,
-    BrowserAnimationsModule,
-    LensTrackMaterialModule,
-    FlexLayoutModule,
+    HttpModule,
+    HttpClientModule,
+    SharedFormsModule,
+    SharedMaterialModule,
     StoreModule.forRoot(reducers, { metaReducers }),
     !environment.production ? StoreDevtoolsModule.instrument() : [],
     EffectsModule.forRoot([AppEffects]),
+    UserProfileManagementModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
