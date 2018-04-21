@@ -14,13 +14,15 @@ import { environment } from '../environments/environment';
 import { EffectsModule } from '@ngrx/effects';
 import { AppEffects } from './app.effects';
 import { MainNavbarComponent } from './main-navbar/main-navbar.component';
+import { LandingPageComponent } from './landing-page/landing-page.component';
 import { LensCalendarComponent } from './lens-calendar/lens-calendar.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     MainNavbarComponent,
-    LensCalendarComponent
+    LandingPageComponent,
+    LensCalendarComponent,
   ],
   imports: [
     RouterModule.forRoot(
