@@ -25,7 +25,12 @@ export const initialState: UserProfileManagementState = {
 const ADD_USER_PROFILE_ACTION = '[User Profile] add profile';
 const SELECT_CURRENT_PROFILE_ACTION = '[User Profile] select profile';
 
-export class AddUserProfileAction extends ActionWithPayload<Partial<UserProfile>> {
+export interface AddUserProfileActionPayload {
+  userProfile?: Partial<UserProfile>;
+  makeCurrent?: boolean;
+}
+
+export class AddUserProfileAction extends ActionWithPayload<AddUserProfileActionPayload> {
   type = ADD_USER_PROFILE_ACTION;
 }
 
@@ -40,15 +45,17 @@ export const reducer: ActionReducer<UserProfileManagementState, UserProfileActio
     case ADD_USER_PROFILE_ACTION:
       const id = state.userProfiles.length + 1;
       const payload = (action as AddUserProfileAction).payload;
+      const newUserProfile: UserProfile = {
+        id: id,
+        name: (payload && payload.userProfile && payload.userProfile.name) || `Profile ${id}`,
+      };
       return {
         ...state,
         userProfiles: [
           ...state.userProfiles,
-          {
-            id: id,
-            name: (payload && payload.name) || `Profile ${id}`,
-          }
-        ]
+          newUserProfile,
+        ],
+        currentUserProfile: payload.makeCurrent ? newUserProfile : state.currentUserProfile,
       };
     case SELECT_CURRENT_PROFILE_ACTION:
       const userProfile = _.find(state.userProfiles, { id: action.payload });

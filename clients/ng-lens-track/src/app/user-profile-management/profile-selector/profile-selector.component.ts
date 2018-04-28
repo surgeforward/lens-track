@@ -25,7 +25,9 @@ export class ProfileSelectorComponent implements OnInit {
   constructor(private _store: Store<AppState>) { }
 
   addUserProfile() {
-    this._store.dispatch(new AddUserProfileAction());
+    this._store.dispatch(new AddUserProfileAction({
+      makeCurrent: true,
+    }));
   }
 
   ngOnInit() {
