@@ -1,13 +1,28 @@
-<mat-form-field>
-  <mat-select [(ngModel)]="currentUserProfile" name="user-profile">
-    <mat-option *ngFor="let userProfile of (userProfiles | async)" [value]="userProfile">
-      {{userProfile.name}}
-    </mat-option>
-  </mat-select>
-</mat-form-field>
-<button mat-icon-button>
-  <mat-icon>mode_edit</mat-icon>
-</button>
-<button mat-icon-button (click)="addUserProfile()">
-  <mat-icon>add</mat-icon>
-</button>
+<div [ngSwitch]="editMode">
+  <form *ngSwitchCase="false">
+    <mat-form-field>
+      <mat-select [(ngModel)]="currentUserProfileId" name="user-profile">
+        <mat-option *ngFor="let userProfile of (userProfiles$ | async)" [value]="userProfile.id">
+          {{userProfile.name}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <button mat-icon-button (click)="edit()" [disabled]="currentUserProfileId === null">
+      <mat-icon>mode_edit</mat-icon>
+    </button>
+    <button mat-icon-button (click)="add()">
+      <mat-icon>add</mat-icon>
+    </button>
+  </form>
+  <form *ngSwitchCase="true" (submit)="saveEdit()">
+    <mat-form-field>
+      <input name="newName" matInput appAutoFocus class="app-user-profile-name" [(ngModel)]="newName">
+    </mat-form-field>
+    <button type="submit" mat-icon-button>
+      <mat-icon>check</mat-icon>
+    </button>
+    <button type="reset" mat-icon-button (click)="cancelEdit()">
+      <mat-icon>clear</mat-icon>
+    </button>
+  </form>
+</div>

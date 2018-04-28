@@ -5,7 +5,6 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { routes } from './routes';
 import { AppComponent } from './app.component';
-import { SharedMaterialModule } from './shared/material.module';
 import { StoreModule } from '@ngrx/store';
 import * as fromRoot from './reducers';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
@@ -16,7 +15,7 @@ import { MainNavbarComponent } from './main-navbar/main-navbar.component';
 import { LandingPageComponent } from './landing-page/landing-page.component';
 import { LensCalendarComponent } from './lens-calendar/lens-calendar.component';
 import { UserProfileManagementModule } from './user-profile-management/user-profile-management.module';
-import { SharedFormsModule } from './shared/forms.module';
+import { AppSharedModule } from './shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -32,8 +31,6 @@ import { SharedFormsModule } from './shared/forms.module';
     ),
     HttpModule,
     HttpClientModule,
-    SharedFormsModule,
-    SharedMaterialModule,
     StoreModule.forRoot(fromRoot.reducers, {
       initialState: fromRoot.initialState,
       metaReducers: fromRoot.metaReducers,
@@ -41,6 +38,7 @@ import { SharedFormsModule } from './shared/forms.module';
     !environment.production ? StoreDevtoolsModule.instrument() : [],
     EffectsModule.forRoot([AppEffects]),
     UserProfileManagementModule,
+    AppSharedModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

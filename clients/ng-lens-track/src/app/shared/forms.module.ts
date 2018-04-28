@@ -18,4 +18,4 @@ const importExports = [
   imports: [...importExports],
   exports: [...importExports]
 })
-export class SharedFormsModule { }
+export class AppFormsModule { }

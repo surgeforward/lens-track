@@ -1,5 +1,6 @@
 import {
   MatFormFieldModule,
+  MatInputModule,
   MatIconModule,
   MatButtonModule,
   MatCheckboxModule,
@@ -12,6 +13,7 @@ import { NgModule } from '@angular/core';
 
 const importExports = [
   MatFormFieldModule,
+  MatInputModule,
   MatIconModule,
   MatButtonModule,
   MatCheckboxModule,
@@ -25,4 +27,4 @@ const importExports = [
   imports: [...importExports],
   exports: [...importExports],
 })
-export class SharedMaterialModule { }
+export class AppMaterialModule { }
