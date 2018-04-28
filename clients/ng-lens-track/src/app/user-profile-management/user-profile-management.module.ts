@@ -1,16 +1,13 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ProfileSelectorComponent } from './profile-selector/profile-selector.component';
-import { SharedMaterialModule } from '../shared/material.module';
-import { SharedFormsModule } from '../shared/forms.module';
 import { StoreModule } from '@ngrx/store';
+import { AppSharedModule } from '../shared/shared.module';
 import * as fromUserProfileManagement from './reducers';
 
 @NgModule({
   imports: [
     CommonModule,
-    SharedMaterialModule,
-    SharedFormsModule,
     StoreModule.forFeature(
       'userProfileManagement',
       fromUserProfileManagement.reducer,
@@ -19,6 +16,7 @@ import * as fromUserProfileManagement from './reducers';
         metaReducers: fromUserProfileManagement.metaReducers
       }
     ),
+    AppSharedModule,
   ],
   declarations: [ProfileSelectorComponent],
   exports: [ProfileSelectorComponent]
