@@ -1,18 +1,20 @@
 import { Injectable } from '@angular/core';
 import {
-  CanActivate,
   ActivatedRouteSnapshot,
+  CanActivate,
   RouterStateSnapshot,
 } from '@angular/router';
+import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
-import { AppState } from '../../reducers';
-import { Store, select } from '@ngrx/store';
-import {
-  selectUserProfiles,
-  AddUserProfileAction,
-} from '../../user-profile-management/reducers';
-import { first, filter } from 'rxjs/operators';
+import { filter, first } from 'rxjs/operators';
+import { ReplaySubject } from 'rxjs/ReplaySubject';
 import { Subject } from 'rxjs/Subject';
+
+import { AppState } from '../../reducers';
+import {
+  AddUserProfileAction,
+  selectUserProfiles,
+} from '../../user-profile-management/reducers';
 
 @Injectable()
 export class UserProfileGuard implements CanActivate {
@@ -34,14 +36,14 @@ export class UserProfileGuard implements CanActivate {
       });
 
     // Don't continue until we have at least one user profile.
-    const subject: Subject<boolean> = new Subject();
+    const canActivateSubject: Subject<boolean> = new ReplaySubject();
     this._store
       .pipe(select(selectUserProfiles), first(result => result.length !== 0))
       .subscribe(result => {
-        subject.next(true);
-        subject.complete();
+        canActivateSubject.next(true);
+        canActivateSubject.complete();
       });
 
-    return subject.asObservable();
+    return canActivateSubject.asObservable();
   }
 }
