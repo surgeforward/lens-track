@@ -5,15 +5,12 @@ import { Observable } from 'rxjs/Observable';
 import { AppEffects } from './app.effects';
 
 describe('AppService', () => {
-  let actions$: Observable<any>;
+  const actions$: Observable<any> = null;
   let effects: AppEffects;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [
-        AppEffects,
-        provideMockActions(() => actions$)
-      ]
+      providers: [AppEffects, provideMockActions(() => actions$)],
     });
 
     effects = TestBed.get(AppEffects);

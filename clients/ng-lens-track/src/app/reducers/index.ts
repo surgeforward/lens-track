@@ -20,7 +20,9 @@ export const initialState: AppState = {
 };
 
 export const reducers: ActionReducerMap<AppState, ActionWithPayload> = {
-  userProfileManagementState: fromUserProfileManagement.reducer
+  userProfileManagementState: fromUserProfileManagement.reducer,
 };
 
-export const metaReducers: MetaReducer<AppState>[] = !environment.production ? [] : [];
+export const metaReducers: MetaReducer<AppState>[] = !environment.production
+  ? []
+  : [];

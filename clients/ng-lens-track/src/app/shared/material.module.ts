@@ -27,4 +27,4 @@ const importExports = [
   imports: [...importExports],
   exports: [...importExports],
 })
-export class AppMaterialModule { }
+export class AppMaterialModule {}

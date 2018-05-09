@@ -17,7 +17,7 @@ import { Subscription } from 'rxjs/Subscription';
 @Component({
   selector: 'app-profile-selector',
   templateUrl: './profile-selector.component.html',
-  styleUrls: ['./profile-selector.component.scss']
+  styleUrls: ['./profile-selector.component.scss'],
 })
 export class ProfileSelectorComponent implements OnInit, OnDestroy {
   userProfiles$: Observable<UserProfile[]>;
@@ -37,19 +37,23 @@ export class ProfileSelectorComponent implements OnInit, OnDestroy {
 
   private _subscriptions: Subscription[] = [];
 
-  constructor(private _store: Store<AppState>) { }
+  constructor(private _store: Store<AppState>) {}
 
   add() {
-    this._store.dispatch(new AddUserProfileAction({
-      makeCurrent: true,
-    }));
+    this._store.dispatch(
+      new AddUserProfileAction({
+        makeCurrent: true,
+      })
+    );
   }
 
   edit() {
     this.userProfiles$
       .pipe(
         take(1),
-        map(userProfiles => _.find(userProfiles, { id: this.currentUserProfileId }))
+        map(userProfiles =>
+          _.find(userProfiles, { id: this.currentUserProfileId })
+        )
       )
       .subscribe(userProfile => {
         this.newName = userProfile.name;
@@ -58,10 +62,12 @@ export class ProfileSelectorComponent implements OnInit, OnDestroy {
   }
 
   saveEdit() {
-    this._store.dispatch(new EditUserProfileAction({
-      id: this.currentUserProfileId,
-      name: this.newName,
-    }));
+    this._store.dispatch(
+      new EditUserProfileAction({
+        id: this.currentUserProfileId,
+        name: this.newName,
+      })
+    );
     this.endEdit();
   }
 

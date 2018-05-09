@@ -13,12 +13,12 @@ import * as fromUserProfileManagement from './reducers';
       fromUserProfileManagement.reducer,
       {
         initialState: fromUserProfileManagement.initialState,
-        metaReducers: fromUserProfileManagement.metaReducers
+        metaReducers: fromUserProfileManagement.metaReducers,
       }
     ),
     AppSharedModule,
   ],
   declarations: [ProfileSelectorComponent],
-  exports: [ProfileSelectorComponent]
+  exports: [ProfileSelectorComponent],
 })
-export class UserProfileManagementModule { }
+export class UserProfileManagementModule {}

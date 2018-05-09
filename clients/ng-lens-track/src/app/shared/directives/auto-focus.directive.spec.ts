@@ -7,8 +7,7 @@ import { By } from 'protractor';
   selector: 'app-test-component',
   template: '<input appAutoFocus>',
 })
-class TestComponent {
-}
+class TestComponent {}
 
 describe('AutoFocusDirective', () => {
   let directive: AutoFocusDirective;
@@ -21,7 +20,9 @@ describe('AutoFocusDirective', () => {
 
   beforeEach(() => {
     const fixture = TestBed.createComponent(TestComponent);
-    const directiveEl = fixture.debugElement.query(By.directive(AutoFocusDirective));
+    const directiveEl = fixture.debugElement.query(
+      By.directive(AutoFocusDirective)
+    );
 
     expect(directiveEl).toBeTruthy();
 

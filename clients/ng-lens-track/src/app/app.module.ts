@@ -1,21 +1,20 @@
+import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { HttpModule } from '@angular/http';
-import { HttpClientModule } from '@angular/common/http';
-
-import { routes } from './routes';
-import { AppComponent } from './app.component';
-import { StoreModule } from '@ngrx/store';
-import * as fromRoot from './reducers';
-import { StoreDevtoolsModule } from '@ngrx/store-devtools';
-import { environment } from '../environments/environment';
 import { EffectsModule } from '@ngrx/effects';
+import { StoreModule } from '@ngrx/store';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+
+import { environment } from '../environments/environment';
+import { AppComponent } from './app.component';
 import { AppEffects } from './app.effects';
-import { MainNavbarComponent } from './main-navbar/main-navbar.component';
 import { LandingPageComponent } from './landing-page/landing-page.component';
 import { LensCalendarComponent } from './lens-calendar/lens-calendar.component';
-import { UserProfileManagementModule } from './user-profile-management/user-profile-management.module';
+import { MainNavbarComponent } from './main-navbar/main-navbar.component';
+import * as fromRoot from './reducers';
+import { routes } from './routes';
 import { AppSharedModule } from './shared/shared.module';
+import { UserProfileManagementModule } from './user-profile-management/user-profile-management.module';
 
 @NgModule({
   declarations: [
@@ -25,11 +24,7 @@ import { AppSharedModule } from './shared/shared.module';
     LensCalendarComponent,
   ],
   imports: [
-    RouterModule.forRoot(
-      routes,
-      { enableTracing: !environment.production }
-    ),
-    HttpModule,
+    RouterModule.forRoot(routes, { enableTracing: !environment.production }),
     HttpClientModule,
     StoreModule.forRoot(fromRoot.reducers, {
       initialState: fromRoot.initialState,
@@ -41,6 +36,6 @@ import { AppSharedModule } from './shared/shared.module';
     AppSharedModule,
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
