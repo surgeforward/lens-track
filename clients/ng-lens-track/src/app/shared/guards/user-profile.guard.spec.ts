@@ -5,11 +5,14 @@ import { UserProfileGuard } from './user-profile.guard';
 describe('UserProfileGuard', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [UserProfileGuard]
+      providers: [UserProfileGuard],
     });
   });
 
-  it('should ...', inject([UserProfileGuard], (guard: UserProfileGuard) => {
-    expect(guard).toBeTruthy();
-  }));
+  it(
+    'should ...',
+    inject([UserProfileGuard], (guard: UserProfileGuard) => {
+      expect(guard).toBeTruthy();
+    })
+  );
 });

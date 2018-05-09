@@ -1,4 +1,10 @@
-import { Directive, ElementRef, Input, OnInit, HostBinding } from '@angular/core';
+import {
+  Directive,
+  ElementRef,
+  Input,
+  OnInit,
+  HostBinding,
+} from '@angular/core';
 
 @Directive({
   selector: '[appAutoFocus]',
@@ -14,7 +20,7 @@ export class AutoFocusDirective implements OnInit {
     this._focus = !!focus || focus === '';
   }
 
-  constructor(private _elementRef: ElementRef) { }
+  constructor(private _elementRef: ElementRef) {}
 
   ngOnInit() {
     if (this.appAutoFocus) {

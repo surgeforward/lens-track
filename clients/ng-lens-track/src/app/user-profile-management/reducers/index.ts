@@ -31,7 +31,9 @@ export interface AddUserProfileActionPayload {
   makeCurrent?: boolean;
 }
 
-export class AddUserProfileAction extends ActionWithPayload<AddUserProfileActionPayload> {
+export class AddUserProfileAction extends ActionWithPayload<
+  AddUserProfileActionPayload
+> {
   type = ADD_USER_PROFILE_ACTION;
 }
 
@@ -44,11 +46,14 @@ export class SelectCurrentUserProfileAction extends ActionWithPayload<number> {
 }
 
 export type UserProfileActions =
-  AddUserProfileAction |
-  EditUserProfileAction |
-  SelectCurrentUserProfileAction;
+  | AddUserProfileAction
+  | EditUserProfileAction
+  | SelectCurrentUserProfileAction;
 
-export const reducer: ActionReducer<UserProfileManagementState, UserProfileActions> = (state, action) => {
+export const reducer: ActionReducer<
+  UserProfileManagementState,
+  UserProfileActions
+> = (state, action) => {
   switch (action.type) {
     case ADD_USER_PROFILE_ACTION:
       const id = findNextId(state.userProfiles);
@@ -60,15 +65,17 @@ export const reducer: ActionReducer<UserProfileManagementState, UserProfileActio
       };
       return {
         ...state,
-        userProfiles: [
-          ...state.userProfiles,
-          newProfile,
-        ],
-        currentUserProfileId: payload.makeCurrent ? id : state.currentUserProfileId,
+        userProfiles: [...state.userProfiles, newProfile],
+        currentUserProfileId: payload.makeCurrent
+          ? id
+          : state.currentUserProfileId,
       };
     case EDIT_USER_PROFILE_ACTION:
       const editedProfile = (<EditUserProfileAction>action).payload;
-      const profileIndex = findProfileIndexById(state.userProfiles, editedProfile.id);
+      const profileIndex = findProfileIndexById(
+        state.userProfiles,
+        editedProfile.id
+      );
       if (profileIndex !== -1) {
         const userProfiles = [...state.userProfiles];
         userProfiles.splice(profileIndex, 1, editedProfile);
@@ -79,7 +86,10 @@ export const reducer: ActionReducer<UserProfileManagementState, UserProfileActio
       }
       break;
     case SELECT_CURRENT_PROFILE_ACTION:
-      const userProfile = findProfileById(state.userProfiles, (<SelectCurrentUserProfileAction>action).payload);
+      const userProfile = findProfileById(
+        state.userProfiles,
+        (<SelectCurrentUserProfileAction>action).payload
+      );
       if (userProfile) {
         return {
           ...state,
@@ -96,7 +106,10 @@ function findProfileById(userProfiles: UserProfile[], id: number): UserProfile {
   return _.find(userProfiles, { id });
 }
 
-function findProfileByName(userProfiles: UserProfile[], name: string): UserProfile {
+function findProfileByName(
+  userProfiles: UserProfile[],
+  name: string
+): UserProfile {
   return _.find(userProfiles, { name });
 }
 
@@ -113,8 +126,13 @@ function findNextId(userProfiles: UserProfile[]): number {
   return nextId;
 }
 
-function generateName(userProfiles: UserProfile[], payload: AddUserProfileActionPayload, id: number): string {
-  const requestedName = payload && payload.userProfile && payload.userProfile.name;
+function generateName(
+  userProfiles: UserProfile[],
+  payload: AddUserProfileActionPayload,
+  id: number
+): string {
+  const requestedName =
+    payload && payload.userProfile && payload.userProfile.name;
   if (requestedName) {
     return requestedName;
   }
@@ -122,16 +140,20 @@ function generateName(userProfiles: UserProfile[], payload: AddUserProfileAction
   let count = id;
   const getNextName = () => `Profile ${count}`;
   let nextName;
-  while (findProfileByName(userProfiles, nextName = getNextName())) {
+  while (findProfileByName(userProfiles, (nextName = getNextName()))) {
     count++;
   }
 
   return nextName;
 }
 
-export const metaReducers: MetaReducer<UserProfileManagementState>[] = !environment.production ? [] : [];
+export const metaReducers: MetaReducer<
+  UserProfileManagementState
+>[] = !environment.production ? [] : [];
 
-export const selectUserProfileManagementState = createFeatureSelector<UserProfileManagementState>('userProfileManagement');
+export const selectUserProfileManagementState = createFeatureSelector<
+  UserProfileManagementState
+>('userProfileManagement');
 
 export const selectUserProfiles = createSelector(
   selectUserProfileManagementState,

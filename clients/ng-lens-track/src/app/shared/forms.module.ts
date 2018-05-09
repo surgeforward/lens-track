@@ -16,6 +16,6 @@ const importExports = [
 
 @NgModule({
   imports: [...importExports],
-  exports: [...importExports]
+  exports: [...importExports],
 })
-export class AppFormsModule { }
+export class AppFormsModule {}

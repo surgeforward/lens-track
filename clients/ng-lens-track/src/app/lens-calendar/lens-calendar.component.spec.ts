@@ -8,9 +8,8 @@ describe('LensCalendarComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ LensCalendarComponent ]
-    })
-    .compileComponents();
+      declarations: [LensCalendarComponent],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

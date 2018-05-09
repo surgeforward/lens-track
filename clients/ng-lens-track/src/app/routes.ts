@@ -10,5 +10,5 @@ export const routes: Routes = [
     canActivateChild: [UserProfileGuard],
   },
   { path: 'landing-page', redirectTo: '/home', pathMatch: 'full' },
-  { path: '', redirectTo: '/home', pathMatch: 'full' }
+  { path: '', redirectTo: '/home', pathMatch: 'full' },
 ];
