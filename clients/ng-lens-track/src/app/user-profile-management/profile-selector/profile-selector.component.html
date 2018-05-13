@@ -13,6 +13,9 @@
     <button mat-icon-button (click)="add()">
       <mat-icon>add</mat-icon>
     </button>
+    <button mat-icon-button (click)="delete()" [disabled]="(userProfiles$ | async).length < 2 || (currentUserProfileId === null)">
+      <mat-icon>delete</mat-icon>
+    </button>
   </form>
   <form *ngSwitchCase="true" (submit)="saveEdit()">
     <mat-form-field>
