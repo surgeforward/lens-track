@@ -4,6 +4,9 @@ import { ProfileSelectorComponent } from './profile-selector/profile-selector.co
 import { StoreModule } from '@ngrx/store';
 import { AppSharedModule } from '../shared/shared.module';
 import * as fromUserProfileManagement from './reducers';
+import { UserSettingsComponent } from './user-settings/user-settings.component';
+
+const components = [ProfileSelectorComponent, UserSettingsComponent];
 
 @NgModule({
   imports: [
@@ -18,7 +21,7 @@ import * as fromUserProfileManagement from './reducers';
     ),
     AppSharedModule,
   ],
-  declarations: [ProfileSelectorComponent],
-  exports: [ProfileSelectorComponent],
+  declarations: [...components],
+  exports: [...components],
 })
 export class UserProfileManagementModule {}
