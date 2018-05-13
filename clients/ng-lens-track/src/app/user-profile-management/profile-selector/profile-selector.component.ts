@@ -7,6 +7,7 @@ import {
   EditUserProfileAction,
   selectUserProfiles,
   selectCurrentUserProfile,
+  DeleteUserProfileAction,
 } from '../reducers';
 import { Store, select } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
@@ -81,7 +82,9 @@ export class ProfileSelectorComponent implements OnInit, OnDestroy {
   }
 
   delete() {
-
+    this._store.dispatch(
+      new DeleteUserProfileAction(this.currentUserProfileId)
+    );
   }
 
   ngOnInit() {

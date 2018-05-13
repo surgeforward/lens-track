@@ -27,28 +27,57 @@ export const reducer: ActionReducer<
       };
     case actions.EDIT_USER_PROFILE_ACTION:
       const editedProfile = (<actions.EditUserProfileAction>action).payload;
-      const profileIndex = findProfileIndexById(
+      const editedProfileIndex = findProfileIndexById(
         state.userProfiles,
         editedProfile.id
       );
-      if (profileIndex !== -1) {
+      if (editedProfileIndex !== -1) {
         const userProfiles = [...state.userProfiles];
-        userProfiles.splice(profileIndex, 1, editedProfile);
+        userProfiles.splice(editedProfileIndex, 1, editedProfile);
         return {
           ...state,
           userProfiles,
         };
       }
       break;
+    case actions.DELETE_USER_PROFILE_ACTION:
+      const idToDelete = (<actions.SelectCurrentUserProfileAction>action)
+        .payload;
+      if (state.userProfiles.length > 1) {
+        const profileIndexToDelete = findProfileIndexById(
+          state.userProfiles,
+          idToDelete
+        );
+
+        if (profileIndexToDelete !== -1) {
+          let currentUserProfileId = state.currentUserProfileId;
+          if (currentUserProfileId === idToDelete) {
+            currentUserProfileId = findSelectedUserProfileAfterDelete(
+              state.userProfiles,
+              idToDelete
+            );
+          }
+
+          const userProfiles = [...state.userProfiles];
+          userProfiles.splice(profileIndexToDelete, 1);
+
+          return {
+            ...state,
+            userProfiles,
+            currentUserProfileId,
+          };
+        }
+      }
+      break;
     case actions.SELECT_CURRENT_PROFILE_ACTION:
-      const userProfile = findProfileById(
+      const profileToSelect = findProfileById(
         state.userProfiles,
         (<actions.SelectCurrentUserProfileAction>action).payload
       );
-      if (userProfile) {
+      if (profileToSelect) {
         return {
           ...state,
-          currentUserProfileId: userProfile.id,
+          currentUserProfileId: profileToSelect.id,
         };
       }
       break;
@@ -100,6 +129,15 @@ function generateName(
   }
 
   return nextName;
+}
+
+function findSelectedUserProfileAfterDelete(
+  userProfiles: UserProfile[],
+  currentUserProfileId: number
+): number {
+  const index = findProfileIndexById(userProfiles, currentUserProfileId);
+  const newIndex = index === userProfiles.length - 1 ? index - 1 : index + 1;
+  return userProfiles[newIndex].id;
 }
 
 export const metaReducers: MetaReducer<
