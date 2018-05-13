@@ -80,6 +80,10 @@ export class ProfileSelectorComponent implements OnInit, OnDestroy {
     this.editMode = false;
   }
 
+  delete() {
+
+  }
+
   ngOnInit() {
     this.userProfiles$ = this._store.pipe(select(selectUserProfiles));
     const currentUserProfileSubscription = this._store
