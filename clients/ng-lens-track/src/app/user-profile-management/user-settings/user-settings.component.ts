@@ -4,11 +4,7 @@ import { ReplaySubject } from 'rxjs/ReplaySubject';
 import { Subject } from 'rxjs/Subject';
 import { Store, select } from '@ngrx/store';
 import { AppState } from '../../reducers';
-import {
-  selectCurrentUserProfileId,
-  selectUserProfiles,
-  EditUserProfileAction,
-} from '../reducers';
+import { EditUserProfileAction, selectCurrentUserProfile } from '../reducers';
 import { takeUntil, take, map } from 'rxjs/operators';
 import * as _ from 'lodash';
 import { UserProfileSettings } from '../models/user-profile-settings';
@@ -47,20 +43,10 @@ export class UserSettingsComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this._store
-      .pipe(select(selectCurrentUserProfileId), takeUntil(this._destroyed$))
-      .subscribe(currentUserProfileId => {
-        this.currentUserProfileId = currentUserProfileId;
-        this._store
-          .pipe(
-            select(selectUserProfiles),
-            take(1),
-            map(userProfiles =>
-              _.find(userProfiles, { id: currentUserProfileId })
-            )
-          )
-          .subscribe(userProfile => {
-            this.settings = { ...userProfile.settings };
-          });
+      .pipe(select(selectCurrentUserProfile), takeUntil(this._destroyed$))
+      .subscribe(currentUserProfile => {
+        this.currentUserProfileId = currentUserProfile.id;
+        this.settings = { ...currentUserProfile.settings };
       });
   }
 
