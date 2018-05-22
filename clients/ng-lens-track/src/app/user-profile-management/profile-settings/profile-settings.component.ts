@@ -10,11 +10,11 @@ import * as _ from 'lodash';
 import { UserProfileSettings } from '../models/user-profile-settings';
 
 @Component({
-  selector: 'app-user-settings',
-  templateUrl: './user-settings.component.html',
-  styleUrls: ['./user-settings.component.scss'],
+  selector: 'app-profile-settings',
+  templateUrl: './profile-settings.component.html',
+  styleUrls: ['./profile-settings.component.scss'],
 })
-export class UserSettingsComponent implements OnInit, OnDestroy {
+export class ProfileSettingsComponent implements OnInit, OnDestroy {
   private _destroyed$: Subject<void> = new ReplaySubject();
 
   currentUserProfileId: number;
