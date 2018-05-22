@@ -17,6 +17,10 @@ export const reducer: ActionReducer<
       const newProfile: UserProfile = {
         id: id,
         name: name,
+        settings: {
+          changeFrequency: 15,
+          allowSkipping: true,
+        },
       };
       return {
         ...state,
@@ -26,11 +30,17 @@ export const reducer: ActionReducer<
           : state.currentUserProfileId,
       };
     case actions.EDIT_USER_PROFILE_ACTION:
-      const editedProfile = (<actions.EditUserProfileAction>action).payload;
+      const editedPartialProfile = (<actions.EditUserProfileAction>action)
+        .payload;
       const editedProfileIndex = findProfileIndexById(
         state.userProfiles,
-        editedProfile.id
+        editedPartialProfile.id
       );
+
+      const editedProfile = {
+        ...state.userProfiles[editedProfileIndex],
+        ...editedPartialProfile,
+      };
       if (editedProfileIndex !== -1) {
         const userProfiles = [...state.userProfiles];
         userProfiles.splice(editedProfileIndex, 1, editedProfile);

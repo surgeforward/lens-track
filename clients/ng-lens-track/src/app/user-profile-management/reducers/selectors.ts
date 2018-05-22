@@ -10,7 +10,7 @@ export const selectUserProfiles = createSelector(
   state => state.userProfiles
 );
 
-export const selectCurrentUserProfile = createSelector(
+export const selectCurrentUserProfileId = createSelector(
   selectUserProfileManagementState,
   state => state.currentUserProfileId
 );

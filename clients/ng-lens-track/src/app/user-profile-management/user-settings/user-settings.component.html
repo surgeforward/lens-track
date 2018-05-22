@@ -1,18 +1,31 @@
-<form [formGroup]="form" (ngSubmit)="save()">
-  <mat-form-field>
-      <input formControlName="changeFrequency" matInput placeholder="Change frequency (in days)" value="15">
-      <mat-error *ngIf="changeFrequencyControl.hasError('required')">
-        Change frequency is <strong>required</strong>
-      </mat-error>
-      <mat-error *ngIf="changeFrequencyControl.hasError('min')">
-        Change cycle must be at least a day long
-      </mat-error>
-      <mat-error *ngIf="changeFrequencyControl.hasError('pattern')">
-        Change frequency must be entered as number of days
-      </mat-error>
+<form [formGroup]="form" (ngSubmit)="save()" fxLayout="column" fxLayoutGap="10px">
+  <mat-form-field class="col-xs-3">
+    <input
+      formControlName="changeFrequency"
+      matInput
+      placeholder="Change frequency (in days)"
+      [(ngModel)]="settings.changeFrequency"
+    >
+    <mat-error *ngIf="changeFrequencyControl.hasError('required')">
+      Change frequency is <strong>required</strong>
+    </mat-error>
+    <mat-error *ngIf="changeFrequencyControl.hasError('min')">
+      Change cycle must be at least a day long
+    </mat-error>
+    <mat-error *ngIf="changeFrequencyControl.hasError('pattern')">
+      Change frequency must be entered as number of days
+    </mat-error>
   </mat-form-field>
 
-  <mat-checkbox>Allow skipping days</mat-checkbox>
+  <mat-checkbox
+    formControlName="allowSkipping"
+    class="col-xs-12"
+    [(ngModel)]="settings.allowSkipping"
+  >
+    Allow skipping days
+  </mat-checkbox>
 
-  <button type="submit" mat-button color="primary">Save</button>
+  <div class="col-xs-12">
+    <button type="submit" mat-raised-button color="primary">Save</button>
+  </div>
 </form>

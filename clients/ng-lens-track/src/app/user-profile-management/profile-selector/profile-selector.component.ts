@@ -6,7 +6,7 @@ import {
   SelectCurrentUserProfileAction,
   EditUserProfileAction,
   selectUserProfiles,
-  selectCurrentUserProfile,
+  selectCurrentUserProfileId,
   DeleteUserProfileAction,
 } from '../reducers';
 import { Store, select } from '@ngrx/store';
@@ -90,7 +90,7 @@ export class ProfileSelectorComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.userProfiles$ = this._store.pipe(select(selectUserProfiles));
     const currentUserProfileSubscription = this._store
-      .pipe(select(selectCurrentUserProfile))
+      .pipe(select(selectCurrentUserProfileId))
       .subscribe(currentUserProfileId => {
         this._currentUserProfileId = currentUserProfileId;
       });

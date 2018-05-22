@@ -17,7 +17,9 @@ export class AddUserProfileAction extends ActionWithPayload<
   type = ADD_USER_PROFILE_ACTION;
 }
 
-export class EditUserProfileAction extends ActionWithPayload<UserProfile> {
+export class EditUserProfileAction extends ActionWithPayload<
+  Partial<UserProfile>
+> {
   type = EDIT_USER_PROFILE_ACTION;
 }
 
