@@ -9,7 +9,6 @@ import { environment } from '../environments/environment';
 import { AppComponent } from './app.component';
 import { AppEffects } from './app.effects';
 import { LandingPageComponent } from './landing-page/landing-page.component';
-import { LensCalendarComponent } from './lens-calendar/lens-calendar.component';
 import { MainNavbarComponent } from './main-navbar/main-navbar.component';
 import * as fromRoot from './reducers';
 import { routes } from './routes';
@@ -17,12 +16,7 @@ import { AppSharedModule } from './shared/shared.module';
 import { UserProfileManagementModule } from './user-profile-management/user-profile-management.module';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    MainNavbarComponent,
-    LandingPageComponent,
-    LensCalendarComponent,
-  ],
+  declarations: [AppComponent, MainNavbarComponent, LandingPageComponent],
   imports: [
     RouterModule.forRoot(routes, { enableTracing: !environment.production }),
     HttpClientModule,

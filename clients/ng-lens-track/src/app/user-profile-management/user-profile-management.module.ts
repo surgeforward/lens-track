@@ -5,8 +5,15 @@ import { StoreModule } from '@ngrx/store';
 import { AppSharedModule } from '../shared/shared.module';
 import * as fromUserProfileManagement from './reducers';
 import { ProfileSettingsComponent } from './profile-settings/profile-settings.component';
+import { CalendarViewComponent } from './calendar-view/calendar-view.component';
+import { FullProfileViewComponent } from './full-profile-view/full-profile-view.component';
 
-const components = [ProfileSelectorComponent, ProfileSettingsComponent];
+const components = [
+  ProfileSelectorComponent,
+  ProfileSettingsComponent,
+  FullProfileViewComponent,
+  CalendarViewComponent,
+];
 
 @NgModule({
   imports: [
