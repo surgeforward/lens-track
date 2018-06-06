@@ -32,5 +32,6 @@ const components = [
   ],
   declarations: [...components],
   exports: [...components],
+  entryComponents: [ProfileSettingsComponent],
 })
 export class UserProfileManagementModule {}

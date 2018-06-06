@@ -8,6 +8,7 @@ import { EditUserProfileAction, selectCurrentUserProfile } from '../reducers';
 import { takeUntil, take, map } from 'rxjs/operators';
 import * as _ from 'lodash';
 import { UserProfileSettings } from '../models/user-profile-settings';
+import { MatDialogRef } from '@angular/material';
 
 @Component({
   selector: 'app-profile-settings',
@@ -19,11 +20,11 @@ export class ProfileSettingsComponent implements OnInit, OnDestroy {
 
   currentUserProfileId: number;
   settings: UserProfileSettings = {
-    changeFrequency: null,
-    allowSkipping: null,
+    changeFrequencyDays: null,
+    countSkippedDays: null,
   };
 
-  changeFrequencyControl: FormControl = new FormControl(
+  changeFrequencyDaysControl: FormControl = new FormControl(
     '',
     Validators.compose([
       Validators.required,
@@ -32,14 +33,17 @@ export class ProfileSettingsComponent implements OnInit, OnDestroy {
     ])
   );
 
-  allowSkippingControl: FormControl = new FormControl('');
+  countSkippedDaysControl: FormControl = new FormControl('');
 
   form: FormGroup = new FormGroup({
-    changeFrequency: this.changeFrequencyControl,
-    allowSkipping: this.allowSkippingControl,
+    changeFrequencyDays: this.changeFrequencyDaysControl,
+    countSkippedDays: this.countSkippedDaysControl,
   });
 
-  constructor(private _store: Store<AppState>) {}
+  constructor(
+    private _store: Store<AppState>,
+    private _dialogRef: MatDialogRef<ProfileSettingsComponent>
+  ) {}
 
   ngOnInit() {
     this._store
@@ -61,5 +65,11 @@ export class ProfileSettingsComponent implements OnInit, OnDestroy {
         settings: this.settings,
       })
     );
+
+    this.close();
+  }
+
+  close() {
+    this._dialogRef.close();
   }
 }

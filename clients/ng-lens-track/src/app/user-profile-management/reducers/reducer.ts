@@ -18,8 +18,8 @@ export const reducer: ActionReducer<
         id: id,
         name: name,
         settings: {
-          changeFrequency: 15,
-          allowSkipping: true,
+          changeFrequencyDays: 15,
+          countSkippedDays: false,
         },
       };
       return {

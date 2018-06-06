@@ -9,7 +9,8 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "format": "prettier --loglevel silent --single-quote --trailing-comma es5 --write \"src/app/**/*.ts\""
+    "format": "prettier --loglevel silent --single-quote --trailing-comma es5 --write \"src/app/**/*.ts\"",
+    "format-lint": "yarn format && yarn lint --fix"
   },
   "private": true,
   "dependencies": {
