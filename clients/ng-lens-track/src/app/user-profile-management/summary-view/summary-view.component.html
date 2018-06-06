@@ -2,7 +2,7 @@
   <app-roundell diameter="500px" cssClasses="mat-elevation-z6 accentColorBG">
     <div class="summary-inner-container" fxFlexFill fxLayout="column" fxLayoutAlign="center">
       <div class="summary-settings" fxFlex="grow" fxLayout="row" fxLayoutAlign="end start">
-        <button mat-icon-button>
+        <button mat-icon-button (click)="openSettingsDialog()">
           <mat-icon>settings</mat-icon>
         </button>
       </div>

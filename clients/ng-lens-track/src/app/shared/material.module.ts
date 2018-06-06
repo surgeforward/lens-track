@@ -8,6 +8,7 @@ import {
   MatSelectModule,
   MatDatepickerModule,
   MatExpansionModule,
+  MatDialogModule,
 } from '@angular/material';
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
 import { NgModule } from '@angular/core';
@@ -23,6 +24,7 @@ const importExports = [
   MatDatepickerModule,
   MatMomentDateModule,
   MatExpansionModule,
+  MatDialogModule,
 ];
 
 @NgModule({

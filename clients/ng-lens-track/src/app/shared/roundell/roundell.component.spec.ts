@@ -8,9 +8,8 @@ describe('RoundellComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ RoundellComponent ]
-    })
-    .compileComponents();
+      declarations: [RoundellComponent],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

@@ -8,9 +8,8 @@ describe('SummaryViewComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ SummaryViewComponent ]
-    })
-    .compileComponents();
+      declarations: [SummaryViewComponent],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

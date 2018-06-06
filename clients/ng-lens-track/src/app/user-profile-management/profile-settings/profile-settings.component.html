@@ -1,31 +1,36 @@
-<form [formGroup]="form" (ngSubmit)="save()" fxLayout="column" fxLayoutGap="10px">
-  <mat-form-field class="col-xs-3">
-    <input
-      formControlName="changeFrequency"
-      matInput
-      placeholder="Change frequency (in days)"
-      [(ngModel)]="settings.changeFrequency"
-    >
-    <mat-error *ngIf="changeFrequencyControl.hasError('required')">
-      Change frequency is <strong>required</strong>
-    </mat-error>
-    <mat-error *ngIf="changeFrequencyControl.hasError('min')">
-      Change cycle must be at least a day long
-    </mat-error>
-    <mat-error *ngIf="changeFrequencyControl.hasError('pattern')">
-      Change frequency must be entered as number of days
-    </mat-error>
-  </mat-form-field>
+<form [formGroup]="form" (ngSubmit)="save()" >
+  <h1 mat-dialog-title>Settings</h1>
+  <div mat-dialog-content>
+    <div fxLayout="column" fxLayoutGap="10px">
+      <mat-form-field>
+        <input
+          formControlName="changeFrequencyDays"
+          matInput
+          placeholder="Change frequency (in days)"
+          [(ngModel)]="settings.changeFrequencyDays"
+        >
+        <mat-error *ngIf="changeFrequencyDaysControl.hasError('required')">
+          Change frequency is <strong>required</strong>
+        </mat-error>
+        <mat-error *ngIf="changeFrequencyDaysControl.hasError('min')">
+          Change cycle must be at least a day long
+        </mat-error>
+        <mat-error *ngIf="changeFrequencyDaysControl.hasError('pattern')">
+          Change frequency must be entered as number of days
+        </mat-error>
+      </mat-form-field>
 
-  <mat-checkbox
-    formControlName="allowSkipping"
-    class="col-xs-12"
-    [(ngModel)]="settings.allowSkipping"
-  >
-    Allow skipping days
-  </mat-checkbox>
+      <mat-checkbox
+        formControlName="countSkippedDays"
+        [(ngModel)]="settings.countSkippedDays"
+      >
+        Count skipped days
+      </mat-checkbox>
+    </div>
+  </div>
 
-  <div class="col-xs-12">
-    <button type="submit" mat-raised-button color="primary">Save</button>
+  <div mat-dialog-actions>
+    <button type="submit" mat-raised-button cdkFocusInitial color="primary">Save</button>
+    <button mat-button (click)="close()">Cancel</button>
   </div>
 </form>

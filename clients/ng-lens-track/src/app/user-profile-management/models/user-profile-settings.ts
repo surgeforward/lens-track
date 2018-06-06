@@ -1,4 +1,4 @@
 export interface UserProfileSettings {
-  changeFrequency: number;
-  allowSkipping: boolean;
+  changeFrequencyDays: number;
+  countSkippedDays: boolean;
 }
