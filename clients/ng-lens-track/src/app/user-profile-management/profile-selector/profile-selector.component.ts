@@ -10,10 +10,9 @@ import {
   DeleteUserProfileAction,
 } from '../reducers';
 import { Store, select } from '@ngrx/store';
-import { Observable } from 'rxjs/Observable';
+import { Observable, Subscription } from 'rxjs';
 import { take, map } from 'rxjs/operators';
 import { AppState } from '../../reducers';
-import { Subscription } from 'rxjs/Subscription';
 
 @Component({
   selector: 'app-profile-selector',
