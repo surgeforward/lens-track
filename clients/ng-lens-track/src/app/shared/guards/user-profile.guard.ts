@@ -5,10 +5,8 @@ import {
   RouterStateSnapshot,
 } from '@angular/router';
 import { select, Store } from '@ngrx/store';
-import { Observable } from 'rxjs/Observable';
+import { Observable, ReplaySubject, Subject } from 'rxjs';
 import { filter, first } from 'rxjs/operators';
-import { ReplaySubject } from 'rxjs/ReplaySubject';
-import { Subject } from 'rxjs/Subject';
 
 import { AppState } from '../../reducers';
 import {
