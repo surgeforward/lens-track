@@ -18,10 +18,6 @@ export class ProfileSettingsComponent implements OnInit, OnDestroy {
   private _destroyed$: Subject<void> = new ReplaySubject();
 
   currentUserProfileId: number;
-  settings: UserProfileSettings = {
-    changeFrequencyDays: null,
-    countSkippedDays: null,
-  };
 
   changeFrequencyDaysControl: FormControl = new FormControl(
     '',
@@ -49,7 +45,10 @@ export class ProfileSettingsComponent implements OnInit, OnDestroy {
       .pipe(select(selectCurrentUserProfile), takeUntil(this._destroyed$))
       .subscribe(currentUserProfile => {
         this.currentUserProfileId = currentUserProfile.id;
-        this.settings = { ...currentUserProfile.settings };
+        this.form.setValue({
+          changeFrequencyDays: currentUserProfile.settings.changeFrequencyDays,
+          countSkippedDays: currentUserProfile.settings.countSkippedDays,
+        });
       });
   }
 
@@ -58,10 +57,15 @@ export class ProfileSettingsComponent implements OnInit, OnDestroy {
   }
 
   save() {
+    const value = this.form.value;
+    const settings: UserProfileSettings = {
+      changeFrequencyDays: +value.changeFrequencyDays,
+      countSkippedDays: value.countSkippedDays,
+    };
     this._store.dispatch(
       new EditUserProfileAction({
         id: this.currentUserProfileId,
-        settings: this.settings,
+        settings: settings,
       })
     );
 

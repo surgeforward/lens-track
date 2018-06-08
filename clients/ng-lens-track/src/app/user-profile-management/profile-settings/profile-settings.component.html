@@ -7,7 +7,6 @@
           formControlName="changeFrequencyDays"
           matInput
           placeholder="Change frequency (in days)"
-          [(ngModel)]="settings.changeFrequencyDays"
         >
         <mat-error *ngIf="changeFrequencyDaysControl.hasError('required')">
           Change frequency is <strong>required</strong>
@@ -20,10 +19,7 @@
         </mat-error>
       </mat-form-field>
 
-      <mat-checkbox
-        formControlName="countSkippedDays"
-        [(ngModel)]="settings.countSkippedDays"
-      >
+      <mat-checkbox formControlName="countSkippedDays">
         Count skipped days
       </mat-checkbox>
     </div>
