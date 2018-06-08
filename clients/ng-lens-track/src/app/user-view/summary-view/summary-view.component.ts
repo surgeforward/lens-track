@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material';
-import { ProfileSettingsComponent } from '../profile-settings/profile-settings.component';
+import { ProfileSettingsComponent } from '../../user-profile-management/profile-settings/profile-settings.component';
 
 @Component({
   selector: 'app-summary-view',
