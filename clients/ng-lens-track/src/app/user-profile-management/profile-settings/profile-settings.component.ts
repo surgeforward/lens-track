@@ -3,7 +3,7 @@ import { FormGroup, Validators, FormControl } from '@angular/forms';
 import { ReplaySubject, Subject } from 'rxjs';
 import { Store, select } from '@ngrx/store';
 import { AppState } from '../../reducers';
-import { EditUserProfileAction, selectCurrentUserProfile } from '../reducers';
+import { UpdateUserProfileAction, selectCurrentUserProfile } from '../reducers';
 import { takeUntil, take, map } from 'rxjs/operators';
 import * as _ from 'lodash';
 import { UserProfileSettings } from '../models/user-profile-settings';
@@ -17,7 +17,7 @@ import { MatDialogRef } from '@angular/material';
 export class ProfileSettingsComponent implements OnInit, OnDestroy {
   private _destroyed$: Subject<void> = new ReplaySubject();
 
-  currentUserProfileId: number;
+  currentUserProfileId: string;
 
   changeFrequencyDaysControl: FormControl = new FormControl(
     '',
@@ -63,7 +63,7 @@ export class ProfileSettingsComponent implements OnInit, OnDestroy {
       countSkippedDays: value.countSkippedDays,
     };
     this._store.dispatch(
-      new EditUserProfileAction({
+      new UpdateUserProfileAction({
         id: this.currentUserProfileId,
         settings: settings,
       })

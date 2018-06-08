@@ -14,12 +14,8 @@ const components = [
 ];
 
 @NgModule({
-  imports: [
-    CommonModule,
-    AppSharedModule,
-    UserProfileManagementModule,
-  ],
+  imports: [CommonModule, AppSharedModule, UserProfileManagementModule],
   declarations: [...components],
   exports: [...components],
 })
-export class UserViewModule { }
+export class UserViewModule {}

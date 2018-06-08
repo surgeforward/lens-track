@@ -6,10 +6,7 @@ import { AppSharedModule } from '../shared/shared.module';
 import * as fromUserProfileManagement from './reducers';
 import { ProfileSettingsComponent } from './profile-settings/profile-settings.component';
 
-const components = [
-  ProfileSelectorComponent,
-  ProfileSettingsComponent,
-];
+const components = [ProfileSelectorComponent, ProfileSettingsComponent];
 
 @NgModule({
   imports: [
