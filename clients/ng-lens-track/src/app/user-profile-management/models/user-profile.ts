@@ -1,7 +1,7 @@
 import { UserProfileSettings } from './user-profile-settings';
 
 export interface UserProfile {
-  id: number;
+  id: string;
   name: string;
   settings: UserProfileSettings;
 }

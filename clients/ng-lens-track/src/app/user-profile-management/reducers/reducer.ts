@@ -1,153 +1,119 @@
 import { ActionReducer, MetaReducer } from '@ngrx/store';
-import { UserProfileManagementState } from './models';
+import { UserProfileManagementState, adapter } from './models';
 import * as actions from './actions';
 import { UserProfile } from '../models/user-profile';
 import { environment } from '../../../environments/environment';
 import * as _ from 'lodash';
+import { v4 as uuid } from 'uuid';
 
 export const reducer: ActionReducer<
   UserProfileManagementState,
   actions.UserProfileActions
 > = (state, action) => {
+  let updatedState: UserProfileManagementState | void;
   switch (action.type) {
     case actions.ADD_USER_PROFILE_ACTION:
-      const id = findNextId(state.userProfiles);
-      const payload = (action as actions.AddUserProfileAction).payload;
-      const name = generateName(state.userProfiles, payload, id);
-      const newProfile: UserProfile = {
-        id: id,
-        name: name,
-        settings: {
-          changeFrequencyDays: 15,
-          countSkippedDays: false,
-        },
-      };
-      return {
-        ...state,
-        userProfiles: [...state.userProfiles, newProfile],
-        currentUserProfileId: payload.makeCurrent
-          ? id
-          : state.currentUserProfileId,
-      };
-    case actions.EDIT_USER_PROFILE_ACTION:
-      const editedPartialProfile = (<actions.EditUserProfileAction>action)
-        .payload;
-      const editedProfileIndex = findProfileIndexById(
-        state.userProfiles,
-        editedPartialProfile.id
+      return addUserProfile(
+        state,
+        (action as actions.AddUserProfileAction).payload
       );
-
-      const editedProfile = {
-        ...state.userProfiles[editedProfileIndex],
-        ...editedPartialProfile,
-      };
-      if (editedProfileIndex !== -1) {
-        const userProfiles = [...state.userProfiles];
-        userProfiles.splice(editedProfileIndex, 1, editedProfile);
-        return {
-          ...state,
-          userProfiles,
-        };
-      }
+    case actions.UPDATE_USER_PROFILE_ACTION:
+      updatedState = updateUserProfile(
+        state,
+        (<actions.UpdateUserProfileAction>action).payload
+      );
       break;
     case actions.DELETE_USER_PROFILE_ACTION:
-      const idToDelete = (<actions.SelectCurrentUserProfileAction>action)
-        .payload;
-      if (state.userProfiles.length > 1) {
-        const profileIndexToDelete = findProfileIndexById(
-          state.userProfiles,
-          idToDelete
-        );
-
-        if (profileIndexToDelete !== -1) {
-          let currentUserProfileId = state.currentUserProfileId;
-          if (currentUserProfileId === idToDelete) {
-            currentUserProfileId = findSelectedUserProfileAfterDelete(
-              state.userProfiles,
-              idToDelete
-            );
-          }
-
-          const userProfiles = [...state.userProfiles];
-          userProfiles.splice(profileIndexToDelete, 1);
-
-          return {
-            ...state,
-            userProfiles,
-            currentUserProfileId,
-          };
-        }
-      }
-      break;
-    case actions.SELECT_CURRENT_PROFILE_ACTION:
-      const profileToSelect = findProfileById(
-        state.userProfiles,
+      updatedState = deleteUserProfile(
+        state,
         (<actions.SelectCurrentUserProfileAction>action).payload
       );
-      if (profileToSelect) {
-        return {
-          ...state,
-          currentUserProfileId: profileToSelect.id,
-        };
-      }
+      break;
+    case actions.SELECT_CURRENT_PROFILE_ACTION:
+      updatedState = selectUserProfile(
+        state,
+        (<actions.SelectCurrentUserProfileAction>action).payload
+      );
       break;
   }
 
-  return state;
+  return updatedState || state;
 };
 
-function findProfileById(userProfiles: UserProfile[], id: number): UserProfile {
-  return _.find(userProfiles, { id });
+function addUserProfile(
+  state: UserProfileManagementState,
+  payload: actions.AddUserProfileActionPayload
+): UserProfileManagementState {
+  const id = uuid();
+  const newProfile: UserProfile = {
+    id,
+    ...payload.userProfile,
+    name: 'New user',
+    settings: {
+      changeFrequencyDays: 15,
+      countSkippedDays: false,
+    },
+  };
+
+  const newState = adapter.addOne(newProfile, state);
+
+  return {
+    ...newState,
+    currentUserProfileId: payload.makeCurrent ? id : state.currentUserProfileId,
+  };
 }
 
-function findProfileByName(
-  userProfiles: UserProfile[],
-  name: string
-): UserProfile {
-  return _.find(userProfiles, { name });
-}
-
-function findProfileIndexById(userProfiles: UserProfile[], id: number): number {
-  return _.findIndex(userProfiles, { id });
-}
-
-function findNextId(userProfiles: UserProfile[]): number {
-  let nextId = userProfiles.length + 1;
-  while (findProfileById(userProfiles, nextId)) {
-    nextId++;
+function updateUserProfile(
+  state: UserProfileManagementState,
+  editedProfile: Partial<UserProfile>
+): UserProfileManagementState | void {
+  if (editedProfile.id) {
+    return adapter.updateOne(
+      { id: editedProfile.id, changes: editedProfile },
+      state
+    );
   }
-
-  return nextId;
 }
 
-function generateName(
-  userProfiles: UserProfile[],
-  payload: actions.AddUserProfileActionPayload,
-  id: number
-): string {
-  const requestedName =
-    payload && payload.userProfile && payload.userProfile.name;
-  if (requestedName) {
-    return requestedName;
-  }
+function deleteUserProfile(
+  state: UserProfileManagementState,
+  id: string
+): UserProfileManagementState | void {
+  if (state.ids.length > 1) {
+    if (id === state.currentUserProfileId) {
+      const newCurrentUserProfileId = findSelectedUserProfileAfterDelete(
+        state.ids as string[],
+        state.currentUserProfileId
+      );
+      state = {
+        ...state,
+        currentUserProfileId: newCurrentUserProfileId,
+      };
+    }
 
-  let count = id;
-  const getNextName = () => `Profile ${count}`;
-  let nextName;
-  while (findProfileByName(userProfiles, (nextName = getNextName()))) {
-    count++;
+    return adapter.removeOne(id, state);
   }
+}
 
-  return nextName;
+function selectUserProfile(
+  state: UserProfileManagementState,
+  id: string
+): UserProfileManagementState | void {
+  if (_.includes(state.ids as string[], id)) {
+    return {
+      ...state,
+      currentUserProfileId: id,
+    };
+  }
 }
 
 function findSelectedUserProfileAfterDelete(
-  userProfiles: UserProfile[],
-  currentUserProfileId: number
-): number {
-  const index = findProfileIndexById(userProfiles, currentUserProfileId);
-  const newIndex = index === userProfiles.length - 1 ? index - 1 : index + 1;
-  return userProfiles[newIndex].id;
+  ids: string[],
+  currentUserProfileId: string
+): string {
+  const index = _.indexOf(ids, currentUserProfileId);
+  const newIndex = index === ids.length - 1 ? index - 1 : index + 1;
+  return ids[newIndex];
 }
 
 export const metaReducers: MetaReducer<

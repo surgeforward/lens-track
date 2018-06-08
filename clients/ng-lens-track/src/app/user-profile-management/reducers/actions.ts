@@ -2,7 +2,7 @@ import { UserProfile } from '../models/user-profile';
 import { ActionWithPayload } from '../../shared/action-with-payload.model';
 
 export const ADD_USER_PROFILE_ACTION = '[User Profile] add profile';
-export const EDIT_USER_PROFILE_ACTION = '[User Profile] edit profile';
+export const UPDATE_USER_PROFILE_ACTION = '[User Profile] update profile';
 export const DELETE_USER_PROFILE_ACTION = '[User Profile] delete profile';
 export const SELECT_CURRENT_PROFILE_ACTION = '[User Profile] select profile';
 
@@ -17,22 +17,22 @@ export class AddUserProfileAction extends ActionWithPayload<
   type = ADD_USER_PROFILE_ACTION;
 }
 
-export class EditUserProfileAction extends ActionWithPayload<
+export class UpdateUserProfileAction extends ActionWithPayload<
   Partial<UserProfile>
 > {
-  type = EDIT_USER_PROFILE_ACTION;
+  type = UPDATE_USER_PROFILE_ACTION;
 }
 
-export class DeleteUserProfileAction extends ActionWithPayload<number> {
+export class DeleteUserProfileAction extends ActionWithPayload<string> {
   type = DELETE_USER_PROFILE_ACTION;
 }
 
-export class SelectCurrentUserProfileAction extends ActionWithPayload<number> {
+export class SelectCurrentUserProfileAction extends ActionWithPayload<string> {
   type = SELECT_CURRENT_PROFILE_ACTION;
 }
 
 export type UserProfileActions =
   | AddUserProfileAction
-  | EditUserProfileAction
+  | UpdateUserProfileAction
   | DeleteUserProfileAction
   | SelectCurrentUserProfileAction;

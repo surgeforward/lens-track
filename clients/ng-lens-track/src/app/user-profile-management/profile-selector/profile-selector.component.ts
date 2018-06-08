@@ -4,7 +4,7 @@ import { UserProfile } from '../models/user-profile';
 import {
   AddUserProfileAction,
   SelectCurrentUserProfileAction,
-  EditUserProfileAction,
+  UpdateUserProfileAction,
   selectUserProfiles,
   selectCurrentUserProfileId,
   DeleteUserProfileAction,
@@ -26,12 +26,12 @@ export class ProfileSelectorComponent implements OnInit, OnDestroy {
 
   newName: string;
 
-  private _currentUserProfileId: number = null;
+  private _currentUserProfileId: string = null;
 
-  get currentUserProfileId(): number {
+  get currentUserProfileId(): string {
     return this._currentUserProfileId;
   }
-  set currentUserProfileId(userProfileId: number) {
+  set currentUserProfileId(userProfileId: string) {
     this._store.dispatch(new SelectCurrentUserProfileAction(userProfileId));
   }
 
@@ -63,7 +63,7 @@ export class ProfileSelectorComponent implements OnInit, OnDestroy {
 
   saveEdit() {
     this._store.dispatch(
-      new EditUserProfileAction({
+      new UpdateUserProfileAction({
         id: this.currentUserProfileId,
         name: this.newName,
       })
