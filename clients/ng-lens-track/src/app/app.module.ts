@@ -14,6 +14,7 @@ import * as fromRoot from './reducers';
 import { routes } from './routes';
 import { AppSharedModule } from './shared/shared.module';
 import { UserProfileManagementModule } from './user-profile-management/user-profile-management.module';
+import { UserViewModule } from './user-view/user-view.module';
 
 @NgModule({
   declarations: [AppComponent, MainNavbarComponent, LandingPageComponent],
@@ -28,6 +29,7 @@ import { UserProfileManagementModule } from './user-profile-management/user-prof
     EffectsModule.forRoot([AppEffects]),
     UserProfileManagementModule,
     AppSharedModule,
+    UserViewModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
